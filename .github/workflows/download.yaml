@@ -3,11 +3,11 @@ name: Download files and images
 
 on:
   push:
+    tag:
+      - 'v*'
     branches: [main, master, release-*, action]
     paths-ignore:
       - 'docs/**'
-    tag:
-      - 'v*'
   release:
     branches: [main, master, release-*]
 
