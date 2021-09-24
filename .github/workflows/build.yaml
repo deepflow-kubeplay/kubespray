@@ -3,11 +3,11 @@ name: Build kubespray images
 
 on:
   push:
+    tag:
+      - 'v*'
     branches: [main, master, release-*, action]
     paths-ignore:
       - 'docs/**'
-    tag:
-      - 'v*'
 
 env:
   IMAGE_REGISTRY: "ghcr.io"
