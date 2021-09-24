@@ -5,7 +5,7 @@ on:
   push:
     tag:
       - 'v*'
-    branches: [main, master, release-*, action]
+    branches: [main, action, release-*]
     paths-ignore:
       - 'docs/**'
   release:
