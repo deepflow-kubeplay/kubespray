@@ -3,11 +3,11 @@ name: Build kubespray images
 
 on:
   push:
-    tag:
-      - 'v*'
-    branch: [main, action, release-*]
+    branches: [main, master, action, release-*]
     paths-ignore:
       - 'docs/**'
+    tag:
+      - 'v*'
 
 env:
   IMAGE_REGISTRY: "ghcr.io"
@@ -48,7 +48,6 @@ jobs:
           sed -n 's/^kube_version: /KUBE_VERSION=/p' roles/kubespray-defaults/defaults/main.yaml >> $GITHUB_ENV
           cat build/kubespray-base/Dockerfile requirements.txt tests/requirements.txt .github/workflows/build.yaml \
           | md5sum | tr -d '\ -' | sed 's/^/BASE_MD5=md5-/' >> $GITHUB_ENV
-
           source $GITHUB_ENV
           if skopeo inspect docker://${BASE_IMAGE_REPO}:${BRANCH_NAME} > mainfest.json; then
             jq -r '.Labels.BASE_MD5' mainfest.json | sed 's/^/LATEST_BASE_MD5=/' >> $GITHUB_ENV
