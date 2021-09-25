@@ -9,7 +9,7 @@ on:
       - 'main'
     paths-ignore:
       - 'docs/**'
-    tag:
+    tags:
       - 'v*'
 
 env:
