@@ -64,3 +64,25 @@
 # state instead of `new`.
 - include_tasks: refresh_config.yml
   when: is_etcd_master
+
+### configure etcd backup and restore script 
+- name: Configure | Copy etcd-backup script to etcd node
+  template:
+    src: "etcd-backup.sh.j2"
+    dest: /etc/etcd-backup.sh
+    backup: yes
+    mode: 0755
+
+- name: Configure | Copy etcd-restore script to etcd node
+  template:
+    src: "etcd-restore.sh.j2"
+    dest: /etc/etcd-restore.sh
+    backup: yes
+    mode: 0755
+
+- name: periodic backup (etcd)
+  cron:
+    name: "periodic backup (etcd)"
+    minute: "*/30"
+    job: "/etc/etcd-backup.sh"
+
