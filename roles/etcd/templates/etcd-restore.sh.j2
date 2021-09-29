@@ -1,0 +1,32 @@
+#! /bin/bash
+set -e
+
+echo "if you need restore etcd, please rm -rf $"
+ETCD_NAME={{ etcd_member_name }}
+ETCD_INITIAL_CLUSTER_TOKEN=k8s_etcd
+ETCDCTL_PATH={{ bin_dir }}
+BACKUP_DIR={{etcd_backup_prefix}}
+ETCD_DATA_DIR={{ etcd_data_dir }}
+ETCD_INITIAL_ADVERTISE_PEER_URLS={{ etcd_peer_url }}
+ETCD_INITIAL_CLUSTER={{ etcd_peer_addresses }}
+ETCDCTL_API=3
+ETCDCTL_ENDPOINTS="{{ etcd_access_addresses.split(',') | first }}"
+ETCDCTL_CERT="{{ etcd_cert_dir }}/admin-{{ inventory_hostname }}.pem"
+ETCDCTL_KEY="{{ etcd_cert_dir }}/admin-{{ inventory_hostname }}-key.pem"
+ETCDCTL_CACERT="{{ etcd_cert_dir }}/ca.pem"
+BACKTIME=$(date +%Y-%m-%d_%H:%M:%S)
+echo "如果你需要恢复etcd的数据，你要删除所有etcd节点的$ETCD_DATA_DIR目录"
+echo "然后把$BACKUP_DIR/etcd-snapshot.db拷贝到其他的etcd节点的$BACKUP_DIR/etcd-snapshot.db"
+echo "最后要在所有etcd节点stop的状态下执行该脚本，执行完毕后启动所有节点的etcd"
+$ETCDCTL_PATH/etcdctl \
+   --name=$ETCD_NAME \
+   --cacert=$ETCDCTL_CACERT \
+   --cert=$ETCDCTL_CERT \
+   --key=$ETCDCTL_KEY \
+   --initial-cluster=$ETCD_INITIAL_CLUSTER \
+   --data-dir=$ETCD_DATA_DIR \
+   --initial-advertise-peer-urls=$ETCD_INITIAL_ADVERTISE_PEER_URLS \
+   --initial-cluster-token=$ETCD_INITIAL_CLUSTER_TOKEN \
+   snapshot restore $BACKUP_DIR/etcd-snapshot.db
+
+echo "restart etcd"
