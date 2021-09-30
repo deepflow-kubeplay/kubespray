@@ -9,6 +9,7 @@ ETCDCTL_CERT="{{ etcd_cert_dir }}/admin-{{ inventory_hostname }}.pem"
 ETCDCTL_KEY="{{ etcd_cert_dir }}/admin-{{ inventory_hostname }}-key.pem"
 ETCDCTL_CACERT="{{ etcd_cert_dir }}/ca.pem"
 BACKTIME=$(date +%Y-%m-%d_%H:%M:%S)
+rm -rf $BACKUP_DIR/etcd-snapshot*.part
 timeout 600 $ETCDCTL_PATH/etcdctl \
    --cacert=$ETCDCTL_CACERT \
    --cert=$ETCDCTL_CERT \
@@ -17,4 +18,4 @@ timeout 600 $ETCDCTL_PATH/etcdctl \
    snapshot save $BACKUP_DIR/etcd-snapshot-$BACKTIME.db
 rm -f  $BACKUP_DIR/etcd-snapshot.db
 cp -f  $BACKUP_DIR/etcd-snapshot-$BACKTIME.db  $BACKUP_DIR/etcd-snapshot.db 
-find $BACKUP_DIR/ -name 'etcd-*' -type f | sort -n | head -n -5 | xargs rm -rf
+find $BACKUP_DIR/ -name 'etcd-*' -type f | sort -n|grep -v etcd-snapshot.db | head -n -5 | xargs rm -rf
