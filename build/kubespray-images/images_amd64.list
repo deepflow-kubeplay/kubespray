@@ -20,3 +20,4 @@ library/kube-proxy:v1.21.5
 library/kube-scheduler:v1.21.5
 library/nginx:1.19
 library/pause:3.3
+
