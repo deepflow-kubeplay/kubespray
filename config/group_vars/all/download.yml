@@ -92,7 +92,7 @@ nginx_image_tag: "{{ nginx_image_version }}"
 
 coredns_image_tag: "{{ coredns_version }}"
 dnsautoscaler_image_tag: "{{ dnsautoscaler_version }}"
-nodelocaldns_image_repo: "{{ kube_image_repo }}/dns/k8s-dns-node-cache"
+nodelocaldns_image_repo: "{{ kube_image_repo }}/k8s-dns-node-cache"
 nodelocaldns_image_tag: "{{ nodelocaldns_version }}"
 coredns_image_repo: "{{ docker_image_repo }}/coredns"
 dnsautoscaler_image_repo: "{{ kube_image_repo }}/cluster-proportional-autoscaler-{{ image_arch }}"

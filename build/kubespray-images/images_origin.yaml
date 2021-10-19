@@ -16,8 +16,6 @@
 # kubernetes addons
 - src: k8s.gcr.io/dns/k8s-dns-node-cache
   dest: library/k8s-dns-node-cache
-- src: k8s.gcr.io/dns/k8s-dns-node-cache
-  dest: library/dns/k8s-dns-node-cache
 - src: k8s.gcr.io/cpa/cluster-proportional-autoscaler-amd64
   dest: library/cluster-proportional-autoscaler-amd64
 - src: k8s.gcr.io/cpa/cluster-proportional-autoscaler-arm64
