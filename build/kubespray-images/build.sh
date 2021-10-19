@@ -3,6 +3,7 @@ GREEN_COL="\\033[32;1m"
 RED_COL="\\033[1;31m"
 NORMAL_COL="\\033[0;39m"
 
+set -x 
 INPUT=$1
 SOURCE_REGISTRY=$2
 
