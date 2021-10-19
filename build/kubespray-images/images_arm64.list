@@ -11,7 +11,7 @@ library/cilium-init:2019-04-05
 library/cilium-operator:v1.9.10
 library/cluster-proportional-autoscaler-arm64:1.8.3
 library/coredns:v1.8.0
-library/dns/k8s-dns-node-cache:1.17.1
+library/k8s-dns-node-cache:1.17.1
 library/envoyproxy-envoy:v1.14.5
 library/flannel:v0.14.0-arm64
 library/kube-apiserver:v1.21.5
