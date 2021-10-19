@@ -137,10 +137,10 @@ jobs:
             echo 'LATEST_IMAGES_MD5=null' >> $GITHUB_ENV
           fi
 
-      # - name: Replace Dockerfile if MD5 not update
-      #   if: ${{ env.IMAGES_MD5 == env.LATEST_IMAGES_MD5 }}
-      #   run: |
-      #     echo "FROM ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGES_MD5 }}" > build/kubespray-images/Dockerfile
+      - name: Replace Dockerfile if MD5 not update
+        if: ${{ env.IMAGES_MD5 == env.LATEST_IMAGES_MD5 }}
+        run: |
+          echo "FROM ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGES_MD5 }}" > build/kubespray-images/Dockerfile
 
       - name: Cache Docker layers
         uses: actions/cache@v2
