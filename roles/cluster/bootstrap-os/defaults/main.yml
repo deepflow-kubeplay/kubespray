@@ -12,7 +12,7 @@ chrony_config_logdir: /var/log/chrony
 
 offline_resources_enabled: true
 
-extra_packages_enabled: false
+extra_packages_enabled: true
 
 offline_resources_url: "https://mirrors.kube.k8s.li"
 
