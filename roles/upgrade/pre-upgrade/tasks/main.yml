@@ -116,7 +116,7 @@
         - drain_nodes
         - drain_fallback_enabled
         - result.rc != 0
-
+        
   rescue:
     - name: Set node back to schedulable
       command: "{{ kubectl }} uncordon {{ kube_override_hostname|default(inventory_hostname) }}"
