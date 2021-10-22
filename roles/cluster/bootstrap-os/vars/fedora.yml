@@ -8,6 +8,8 @@ extra_common_required_pkgs:
 #  - vim
   - wget
   - lvm2
+  - iotop
+  - tcpdump
   
 chrony_service_name: chronyd
 chrony_conf_file_path: /etc/chrony.conf
