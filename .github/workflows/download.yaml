@@ -11,6 +11,8 @@ on:
       - 'docs/**'
     tags:
       - 'v*'
+      - 'release-*'
+      
   release:
     branches: [main, action, release-*]
 
