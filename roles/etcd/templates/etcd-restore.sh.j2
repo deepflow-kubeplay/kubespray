@@ -1,7 +1,6 @@
 #! /bin/bash
 set -e
 
-echo "if you need restore etcd, please rm -rf $"
 ETCD_NAME={{ etcd_member_name }}
 ETCD_INITIAL_CLUSTER_TOKEN=k8s_etcd
 ETCDCTL_PATH={{ bin_dir }}
@@ -17,7 +16,9 @@ ETCDCTL_CACERT="{{ etcd_cert_dir }}/ca.pem"
 BACKTIME=$(date +%Y-%m-%d_%H:%M:%S)
 echo "如果你需要恢复etcd的数据，你要删除所有etcd节点的$ETCD_DATA_DIR目录"
 echo "然后把$BACKUP_DIR/etcd-snapshot.db拷贝到其他的etcd节点的$BACKUP_DIR/etcd-snapshot.db"
+echo "注意 一定要scp到其他etcd节点，保证所有节点恢复同一份数据，不然会脑裂"
 echo "最后要在所有etcd节点stop的状态下执行该脚本，执行完毕后启动所有节点的etcd"
+sleep 5
 $ETCDCTL_PATH/etcdctl \
    --name=$ETCD_NAME \
    --cacert=$ETCDCTL_CACERT \
