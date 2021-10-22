@@ -24,6 +24,8 @@
     state: directory
     mode: 0700
 
+- include_tasks: config-system.yml
+
 - include_tasks: bootstrap.yml
   when: offline_resources_enabled | bool
 

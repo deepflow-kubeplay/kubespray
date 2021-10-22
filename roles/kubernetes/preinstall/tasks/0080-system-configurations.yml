@@ -88,7 +88,7 @@
     reload: yes
   with_items:
     - { name: vm.overcommit_memory, value: 1 }
-    - { name: kernel.panic, value: 10 }
+    - { name: kernel.panic, value: 20 }
     - { name: kernel.panic_on_oops, value: 1 }
   when: kubelet_protect_kernel_defaults|bool
 

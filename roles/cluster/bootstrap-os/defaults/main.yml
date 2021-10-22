@@ -26,6 +26,8 @@ extra_common_required_pkgs:
 
 pkg_install_retries: 4
 
+sysctl_file_path: "/etc/sysctl.d/98-kernel.conf"
+
 registry_domain_ca_cert_url: "{{ offline_resources_url }}/certs/rootCA.crt"
 
 registry_domain_ca_cert_path: |-
