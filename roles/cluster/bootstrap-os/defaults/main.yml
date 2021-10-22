@@ -21,6 +21,8 @@ extra_common_required_pkgs:
   - vim
   - wget
   - lvm2
+  - iotop
+  - tcpdump
 
 pkg_install_retries: 4
 
