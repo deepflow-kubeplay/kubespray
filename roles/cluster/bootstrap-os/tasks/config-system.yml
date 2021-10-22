@@ -1,0 +1,94 @@
+- name: set timezone to Asia/Shanghai
+  timezone:
+    name: Asia/Shanghai
+  tags:
+    - bootstrap-os
+
+- name: Configure ulimit
+  template:
+    src: "kernel.conf.j2"
+    dest: "/etc/security/limits.d/kernel.conf"
+    mode: 0644
+  tags:
+    - bootstrap-os
+
+- name: Stat sysctl file configuration
+  stat:
+    path: "{{ sysctl_file_path }}"
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
+  register: sysctl_file_stat
+  tags:
+    - bootstrap-os
+
+- name: Change sysctl file path to link source if linked
+  set_fact:
+    sysctl_file_path: "{{ sysctl_file_stat.stat.lnk_source }}"
+  when:
+    - sysctl_file_stat.stat.islnk is defined
+    - sysctl_file_stat.stat.islnk
+  tags:
+    - bootstrap-os
+
+- name: Make sure sysctl file path folder exists
+  file:
+    name: "{{ sysctl_file_path | dirname }}"
+    state: directory
+    mode: 0755
+
+- name: config kernel.core_pattern
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: kernel.core_pattern
+    value: "/tmp/core-%e"
+    state: present
+    reload: yes
+
+- name: config kernel.core_uses_pid
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: kernel.core_uses_pid
+    value: "0"
+    state: present
+    reload: yes
+
+- name: config kernel.sysrq
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: kernel.sysrq
+    value: "1"
+    state: present
+    reload: yes
+
+- name: config kernel.softlockup_panic
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: kernel.softlockup_panic
+    value: "1"
+    state: present
+    reload: yes
+
+- name: config kernel.randomize_va_space
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: kernel.randomize_va_space
+    value: "0"
+    state: present
+    reload: yes
+
+- name: config net.core.netdev_max_backlog
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.core.netdev_max_backlog
+    value: "262144"
+    state: present
+    reload: yes
+
+- name: config net.core.dev_weight
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.core.dev_weight
+    value: "600"
+    state: present
+    reload: yes
