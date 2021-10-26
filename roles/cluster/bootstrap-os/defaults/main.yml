@@ -1,6 +1,6 @@
 ---
 ntp_server:
-  - ntp.aliyun.com
+  - "{{ groups['kube_control_plane'][0] }}"
 
 yum_repo_dir: /etc/yum.repos.d
 
