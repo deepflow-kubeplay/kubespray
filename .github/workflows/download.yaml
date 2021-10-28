@@ -3,15 +3,20 @@ name: Download files and images
 
 on:
   push:
-    branches: 
-      - 'action'
-      - 'release-*'
-      - 'main'
-    paths-ignore:
-      - 'docs/**'
     tags:
       - 'v*'
+      - 'rc-*'
+      - 'beta-*'
       - 'release-*'
+    branches: 
+      - 'main' 
+      - 'beta-*'
+      - 'release-*'
+      - 'master' 
+      - 'action'
+    paths-ignore:
+      - 'docs/**'
+
       
   release:
     branches: [main, action, release-*]
