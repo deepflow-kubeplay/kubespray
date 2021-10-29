@@ -1,6 +1,6 @@
 #####
 ###此文件为了在一些不改动代码时出发action时使用
-###build方法： 先打tag 再build
+###build方法： 先build 先打tag 再build
 
 
 build 2021-10-19-05-19
@@ -9,3 +9,4 @@ build 2021-10-20-11-31
 build 2021-10-20-11-47
 build 2021-10-20-18-24
 build 2021-10-29-16-40 beta-07-kubernetes-1.21.5
+build 2021-10-29-16-40 beta-07-kubernetes-1.21.5 x2
