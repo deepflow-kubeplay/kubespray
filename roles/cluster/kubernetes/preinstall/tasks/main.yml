@@ -2,7 +2,7 @@
 - name: Hosts | populate registry domain into hosts file
   blockinfile:
     path: /etc/hosts
-    block: "{{ registry_ip }} {{ registry_domain }}"
+    block: "{{ registry_ip }} {{ registry_domain.split(':')|first }}"
     state: present
     create: yes
     backup: yes
