@@ -32,13 +32,13 @@ registry_domain_ca_cert_url: "{{ offline_resources_url }}/certs/rootCA.crt"
 
 registry_domain_ca_cert_path: |-
   {% if ansible_os_family == "Debian" -%}
-  /usr/local/share/ca-certificates/{{ registry_domain }}-ca.crt
+  /usr/local/share/ca-certificates/{{ registry_domain.split(':')|first }}-ca.crt
   {%- elif ansible_os_family == "RedHat" -%}
-  /etc/pki/ca-trust/source/anchors/{{ registry_domain }}-ca.crt
+  /etc/pki/ca-trust/source/anchors/{{ registry_domain.split(':')|first }}-ca.crt
   {%- elif ansible_os_family in ["Flatcar Container Linux by Kinvolk"] -%}
-  /etc/ssl/certs/{{ registry_domain }}-ca.pem
+  /etc/ssl/certs/{{ registry_domain.split(':')|first }}-ca.pem
   {%- elif ansible_os_family == "Suse" -%}
-  /etc/pki/trust/anchors/{{ registry_domain }}-ca.pem
+  /etc/pki/trust/anchors/{{ registry_domain.split(':')|first }}-ca.pem
   {%- elif ansible_os_family == "ClearLinux" -%}
-  /usr/share/ca-certs/{{ registry_domain }}-ca.pem
+  /usr/share/ca-certs/{{ registry_domain.split(':')|first }}-ca.pem
   {%- endif %}
