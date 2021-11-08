@@ -5,6 +5,8 @@ kubelet_address: "{{ ip | default(fallback_ips[inventory_hostname]) }}{{ (',' + 
 # bind address for kubelet. Set to 0.0.0.0 to listen on all interfaces
 kubelet_bind_address: "{{ ip | default('0.0.0.0') }}"
 
+##kubelet data dir
+kubelet_data_dir: "/var/lib/kubelet"
 # resolv.conf to base dns config
 kube_resolv_conf: "/etc/resolv.conf"
 

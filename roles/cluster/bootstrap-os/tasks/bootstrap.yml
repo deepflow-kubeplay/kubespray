@@ -56,3 +56,18 @@
     state: stopped
     enabled: no
   when: "'ufw.service' in services"
+
+- name: config pod log dir | Create pod log dir on node
+  file:
+    path: "{{ pods_log_dir | dirname }}"
+    mode: 0755
+    state: directory
+    recurse: yes
+
+- name: config pod log dir | link pod log dir to /var/log/pod
+  file:
+    src: "{{ pods_log_dir | dirname }}"
+    dest: "/var/log/pods"
+    state: link
+    force: yes
+  when: 'pods_log_dir != "/var/log/pods"'
