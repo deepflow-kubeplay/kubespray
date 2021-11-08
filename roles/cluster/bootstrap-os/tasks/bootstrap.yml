@@ -59,14 +59,14 @@
 
 - name: config pod log dir | Create pod log dir on node
   file:
-    path: "{{ pods_log_dir | dirname }}"
+    path: "{{ pods_log_dir}}"
     mode: 0755
     state: directory
     recurse: yes
 
 - name: config pod log dir | link pod log dir to /var/log/pod
   file:
-    src: "{{ pods_log_dir | dirname }}"
+    src: "{{ pods_log_dir }}"
     dest: "/var/log/pods"
     state: link
     force: yes

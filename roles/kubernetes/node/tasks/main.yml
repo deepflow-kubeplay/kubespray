@@ -13,6 +13,22 @@
     state: directory
     mode: 0755
 
+- name: config kubelet_data_dir | Create kubelet_data_dir on node
+  file:
+    path: "{{ kubelet_data_dir }}"
+    mode: 0755
+    state: directory
+    recurse: yes
+
+- name: config pod log dir | link pod log dir to /var/log/pod
+  file:
+    src: "{{ kubelet_data_dir }}"
+    dest: "/var/lib/kubelet"
+    state: link
+    force: yes
+  when: 'kubelet_data_dir != "/var/lib/kubelet"'
+
+
 - import_tasks: install.yml
   tags:
     - kubelet
