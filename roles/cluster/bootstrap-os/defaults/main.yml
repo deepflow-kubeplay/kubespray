@@ -42,3 +42,6 @@ registry_domain_ca_cert_path: |-
   {%- elif ansible_os_family == "ClearLinux" -%}
   /usr/share/ca-certs/{{ registry_domain.split(':')|first }}-ca.pem
   {%- endif %}
+
+
+pods_log_dir: "/var/log/pods"
