@@ -18,7 +18,7 @@ offline_resources_url: "https://mirrors.kube.k8s.li"
 
 extra_common_required_pkgs:
   - cifs-utils
-  - vim
+#  - vim
   - wget
   - lvm2
   - iotop
