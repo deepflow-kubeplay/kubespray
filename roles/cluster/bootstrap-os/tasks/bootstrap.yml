@@ -71,3 +71,10 @@
     state: link
     force: yes
   when: 'pods_log_dir != "/var/log/pods"'
+
+- name: config containerd state dir | Create containerd state dir on node
+  file:
+    path: "{{ containerd_state_dir }}"
+    mode: 0755
+    state: directory
+    recurse: yes
