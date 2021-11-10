@@ -41,7 +41,7 @@
   sysctl:
     sysctl_file: "{{ sysctl_file_path }}"
     name: kernel.core_pattern
-    value: "/tmp/core-%e"
+    value: "/var/log/core-%e"
     state: present
     reload: yes
 
@@ -100,3 +100,9 @@
     value: "65535"
     state: present
     reload: yes
+
+- name: periodic clean core file (clean core file)
+  cron:
+    name: "periodic clean core file (clean core file)"
+    day: "*/1"
+    job: "timeout 120 find /var/log/ -mtime +3  -name "core*"  -exec rm -rf {} \;"
