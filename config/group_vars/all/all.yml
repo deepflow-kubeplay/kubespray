@@ -3,6 +3,7 @@
 ## Experimental kubeadm etcd deployment mode. Available only for new deployment
 etcd_kubeadm_enabled: false
 
+k8s_cluster_used_ip: "{{ ansible_host }}"
 ## Directory where the binaries will be installed
 bin_dir: /usr/local/bin
 

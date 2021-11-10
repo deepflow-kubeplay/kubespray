@@ -17,8 +17,7 @@
     fallback_ips_base: |
       ---
       {% for item in (groups['k8s_cluster']|default([]) + groups['etcd']|default([]) + groups['calico_rr']|default([]))|unique %}
-      {% set found = hostvars[item].get('ansible_default_ipv4') %}
-      {{ item }}: "{{ found.get('address', '127.0.0.1') }}"
+      {{ item }}: "{{ hostvars[item].k8s_cluster_used_ip }}"
       {% endfor %}
   delegate_to: localhost
   connection: local
