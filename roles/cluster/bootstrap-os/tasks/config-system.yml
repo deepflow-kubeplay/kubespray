@@ -105,4 +105,4 @@
   cron:
     name: "periodic clean core file (clean core file)"
     day: "*/1"
-    job: "timeout 120 find /var/log/ -mtime +3  -name "core*"  -exec rm -rf {} \;"
+    job: 'timeout 120 find /var/log/ -mtime +3  -name "core*"  -exec rm -rf {} \;'
