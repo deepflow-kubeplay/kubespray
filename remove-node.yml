@@ -33,7 +33,7 @@
   when: reset_nodes|default(True)|bool
 
 - hosts: "{{ node | default('kube_node') }}"
-  gather_facts: no
+  gather_facts: yes
   environment: "{{ proxy_disable_env }}"
   roles:
     - { role: kubespray-defaults, when: reset_nodes|default(True)|bool }
