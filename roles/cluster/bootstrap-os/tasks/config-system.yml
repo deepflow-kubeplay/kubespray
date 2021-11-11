@@ -36,14 +36,6 @@
     name: "{{ sysctl_file_path | dirname }}"
     state: directory
     mode: 0755
-
-- name: config disable_ipv6
-  sysctl:
-    sysctl_file: "{{ sysctl_file_path }}"
-    name: disable_ipv6
-    value: "0"
-    state: present
-    reload: yes
   ignore_errors: true
 
 - name: config kernel.core_pattern
@@ -53,6 +45,7 @@
     value: "/var/log/core-%e"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config kernel.core_uses_pid
   sysctl:
@@ -61,6 +54,7 @@
     value: "0"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config kernel.sysrq
   sysctl:
@@ -69,6 +63,7 @@
     value: "1"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config kernel.softlockup_panic
   sysctl:
@@ -77,6 +72,7 @@
     value: "1"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config kernel.randomize_va_space
   sysctl:
@@ -85,6 +81,7 @@
     value: "0"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config net.core.netdev_max_backlog
   sysctl:
@@ -93,6 +90,7 @@
     value: "262144"
     state: present
     reload: yes
+  ignore_errors: true
 
 - name: config net.core.dev_weight
   sysctl:
@@ -101,7 +99,8 @@
     value: "600"
     state: present
     reload: yes
-    
+  ignore_errors: true  
+
 - name: config fs.inotify.max_user_watches 
   sysctl:
     sysctl_file: "{{ sysctl_file_path }}"
@@ -109,9 +108,21 @@
     value: "65535"
     state: present
     reload: yes
+  ignore_errors: true
+
+##这个内核参数在3.10不能配置，所以放到最下面并且忽略错误，如果放到上面，会导致影响后面的内核参数配置
+- name: config disable_ipv6
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: disable_ipv6
+    value: "0"
+    state: present
+    reload: yes
+  ignore_errors: true
 
 - name: periodic clean core file (clean core file)
   cron:
     name: "periodic clean core file (clean core file)"
     day: "*/1"
     job: 'timeout 120 find /var/log/ -mtime +3  -name "core*"  -exec rm -rf {} \;'
+  ignore_errors: true
