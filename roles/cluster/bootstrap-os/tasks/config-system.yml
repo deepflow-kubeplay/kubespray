@@ -110,11 +110,28 @@
     reload: yes
   ignore_errors: true
 
-##这个内核参数在3.10不能配置，所以放到最下面并且忽略错误，如果放到上面，会导致影响后面的内核参数配置
-- name: config disable_ipv6
+- name: config disable_ipv6 all conf
   sysctl:
     sysctl_file: "{{ sysctl_file_path }}"
-    name: disable_ipv6
+    name: net.ipv6.conf.all.disable_ipv6
+    value: "0"
+    state: present
+    reload: yes
+  ignore_errors: true
+
+- name: config disable_ipv6 default conf
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.ipv6.conf.default.disable_ipv6
+    value: "0"
+    state: present
+    reload: yes
+  ignore_errors: true
+
+- name: config disable_ipv6 lo conf
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.ipv6.conf.lo.disable_ipv6
     value: "0"
     state: present
     reload: yes
