@@ -96,4 +96,4 @@
     name: "periodic backup (etcd)"
     minute: "*/30"
     job: "/etc/etcd-backup.sh"
-
+  ignore_errors: true
