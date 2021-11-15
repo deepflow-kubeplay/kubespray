@@ -79,14 +79,6 @@
     owner: root
     group: root
 
-- name: ensure containerd registry certs config directory
-  file:
-    dest: "/etc/containerd/certs.d"
-    state: directory
-    mode: 0755
-    owner: root
-    group: root
-
 - name: Copy containerd config file
   template:
     src: config.toml.j2
