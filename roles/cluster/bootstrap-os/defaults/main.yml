@@ -23,6 +23,7 @@ extra_common_required_pkgs:
   - lvm2
   - iotop
   - tcpdump
+  - telnet
 
 pkg_install_retries: 4
 
