@@ -32,12 +32,12 @@ kube_master_memory_reserved: 512Mi
 kube_master_cpu_reserved: 200m
 
 # Set to true to reserve resources for system daemons
-system_reserved: false
-system_memory_reserved: 512Mi
-system_cpu_reserved: 500m
+system_reserved: true
+system_memory_reserved: 256Mi
+system_cpu_reserved: 250m
 # Reservation for master hosts
-system_master_memory_reserved: 256Mi
-system_master_cpu_reserved: 250m
+system_master_memory_reserved: 512Mi
+system_master_cpu_reserved: 500m
 
 kubelet_status_update_frequency: 10s
 
@@ -79,9 +79,6 @@ kubelet_logfiles_max_size: 10Mi
 
 ## Support custom flags to be passed to kubelet
 kubelet_custom_flags: []
-#   - "--eviction-hard=memory.available<100Mi"
-#   - "--eviction-soft-grace-period=memory.available=30s"
-#   - "--eviction-soft=memory.available<300Mi"
 
 
 ## Support custom flags to be passed to kubelet only on nodes, not masters
