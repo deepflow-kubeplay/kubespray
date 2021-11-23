@@ -137,9 +137,6 @@ kubelet_logfiles_max_size: 10Mi
 
 ## Support custom flags to be passed to kubelet
 kubelet_custom_flags: []
-#   - "--eviction-hard=memory.available<100Mi"
-#   - "--eviction-soft-grace-period=memory.available=30s"
-#   - "--eviction-soft=memory.available<300Mi"
 
 
 ## Support custom flags to be passed to kubelet only on nodes, not masters

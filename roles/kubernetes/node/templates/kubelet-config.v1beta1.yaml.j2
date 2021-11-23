@@ -113,6 +113,10 @@ evictionHard:
 evictionHard:
   {{ eviction_hard | to_nice_yaml(indent=2) | indent(2) }}
 {% endif %}
+evictionHard:
+  memory.available: "512Mi"
+  nodefs.available: "10Gi"
+  imagefs.available: "10Gi"
 resolvConf: "{{ kube_resolv_conf }}"
 {% if kubelet_config_extra_args %}
 {{ kubelet_config_extra_args | to_nice_yaml(indent=2) }}
