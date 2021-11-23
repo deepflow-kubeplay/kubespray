@@ -3,6 +3,7 @@
 {% for server in ntp_server %}
 server {{ server }} iburst
 {% endfor %}
+allow all
 
 # This directive specify the location of the file containing ID/key pairs for
 # NTP authentication.
