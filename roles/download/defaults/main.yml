@@ -577,11 +577,11 @@ gvisor_containerd_shim_binary_checksums:
 
 nerdctl_archive_checksums:
   arm:
-    0.8.1: 27bdad3f9e2667620f70617c48d595c5c4e24a10fbcd00d31202cd8d571c9233
+    0.14.0: b85b6813935d4a9f93af9fb1104cdefeb06edfcfc7e25507c32f503f222dfd5f
   arm64:
-    0.8.1: b0c35d80da92eaf5ee61873f0d9d6d6ba01d109b62143a31e3c306b2d53a2895
+    0.14.0: bf00613a4d0c400e916e7ee6afdf043b9251e492527c6746ad7553cb2c646cc8
   amd64:
-    0.8.1: 7c3573db282749079e06f4c592b4585d53628d13fd762746b30389f854d79a47
+    0.14.0: 4d3a2e9ecb9efd278313483e85e34e45605f4f8e61805480de440f69a298a649
 
 etcd_binary_checksum: "{{ etcd_binary_checksums[image_arch] }}"
 cni_binary_checksum: "{{ cni_binary_checksums[image_arch] }}"
