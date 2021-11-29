@@ -63,6 +63,7 @@
     mode: 0755
     state: directory
     recurse: yes
+  when: 'pods_log_dir is defined and pods_log_dir != "/var/log/pods"'
 
 - name: config pod log dir | link pod log dir to /var/log/pod
   file:
@@ -70,4 +71,4 @@
     dest: "/var/log/pods"
     state: link
     force: yes
-  when: 'pods_log_dir != "/var/log/pods"'
+  when: 'pods_log_dir is defined and pods_log_dir != "/var/log/pods"'

@@ -2,7 +2,7 @@
 name: Download files and images
 
 on:
-  push:
+  pull_request:
     tags:
       - 'v*'
       - 'rc-*'
