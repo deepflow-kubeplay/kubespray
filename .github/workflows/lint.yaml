@@ -2,10 +2,19 @@
 name: Code Lint
 
 on:
-  push:
-    branches: [main, master, release-*]
   pull_request:
-    branches: [main, master, release-*]
+  push:
+    tags:
+      - 'v*'
+      - 'rc-*'
+      - 'beta-*'
+      - 'release-*'
+    branches: 
+      - 'main' 
+      - 'beta-*'
+      - 'release-*'
+      - 'master' 
+      - 'action'
 
 env:
   LINT_IMAGE: "ghcr.io/k8sli/kubespray:latest"
@@ -20,4 +29,4 @@ jobs:
           fetch-depth: 0
       - name: Lint
         run:
-          docker run --rm -t -v $PWD:/kubespray ${LINT_IMAGE} bash hack/lint.sh || false
+          docker run --rm -t -v $PWD:/kubespray ${LINT_IMAGE} bash hack/lint.sh
