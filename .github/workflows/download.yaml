@@ -3,6 +3,7 @@ name: Download files and images
 
 on:
   pull_request:
+  push:
     tags:
       - 'v*'
       - 'rc-*'
@@ -56,7 +57,6 @@ jobs:
         run: |
           git describe --tags --always | sed 's/^/IMAGE_TAG=/' >> $GITHUB_ENV
           git branch --show-current | sed 's/^/BRANCH_NAME=/' >> $GITHUB_ENV
-          echo $(git branch --show-current)
           git branch --show-current | sed 's/master/latest/;s/main/latest/;s/^/IMAGE_TAG_BY_BRANCH=/' >> $GITHUB_ENV
 
           source $GITHUB_ENV
