@@ -4,7 +4,8 @@
   notify:
     - Containerd | restart containerd
     - Containerd | wait for containerd
-
+    - Buildkit   | restarted buildkit
+    
 - name: Containerd | restart containerd
   systemd:
     name: containerd
@@ -20,7 +21,7 @@
   delay: 4
   until: containerd_ready.rc == 0
 
-- name: buildkit | restarted buildkit service
+- name: Buildkit   | restarted buildkit
   systemd:
     name: buildkit
     enabled: yes
