@@ -372,6 +372,7 @@ metallb_enabled: false
 
 # containerd official CLI tool
 nerdctl_enabled: true
+buildkit_enabled: true
 
 ## When OpenStack is used, Cinder version can be explicitly specified if autodetection fails (Fixed in 1.9: https://github.com/kubernetes/kubernetes/issues/50461)
 # openstack_blockstorage_version: "v1/v2/auto (default)"
