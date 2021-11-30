@@ -95,8 +95,6 @@ jobs:
           tags: |
             ${{ env.FILES_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.FILES_IMAGE_REPO }}:${{ env.FILES_MD5 }}
-            ${{ env.FILES_IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.FILES_IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
 
       - name: Move new cache
         run: |
