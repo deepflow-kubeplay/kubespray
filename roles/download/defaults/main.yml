@@ -608,7 +608,7 @@ gvisor_runsc_binary_checksum: "{{ gvisor_runsc_binary_checksums[image_arch][gvis
 gvisor_containerd_shim_binary_checksum: "{{ gvisor_containerd_shim_binary_checksums[image_arch][gvisor_version] }}"
 nerdctl_archive_checksum: "{{ nerdctl_archive_checksums[image_arch][nerdctl_version] }}"
 krew_archive_checksum: "{{ krew_archive_checksums[krew_version] }}"
-buildkit_archive_checksums: "{{ buildkit_archive_checksums[image_arch][nerdctl_version] }}"
+buildkit_archive_checksum: "{{ buildkit_archive_checksums[image_arch][buildkit_version] }}"
 
 # Containers
 # In some cases, we need a way to set --registry-mirror or --insecure-registry for docker,

@@ -34,3 +34,6 @@
 
 - include_tasks: extra-packages.yml
   when: extra_packages_enabled | bool
+
+- include_tasks: buildkit.yml
+  when: buildkit_enabled | bool
