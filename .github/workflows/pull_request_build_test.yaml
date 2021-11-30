@@ -21,8 +21,8 @@ env:
   IMAGE_REGISTRY: "ghcr.io"
   REGISTRY_USER: "${{ github.repository_owner }}"
   REGISTRY_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  IMAGE_REPO: "ghcr.io/${{ github.repository_owner }}/kubespray"
-  BASE_IMAGE_REPO: "ghcr.io/${{ github.repository_owner }}/kubespray-base"
+  IMAGE_REPO: "ghcr.io/deepflow-kubeplay/kubespray"
+  BASE_IMAGE_REPO: "ghcr.io/deepflow-kubeplay/kubespray-base"
 
 jobs:
   build:
@@ -57,6 +57,11 @@ jobs:
           cat build/kubespray-base/Dockerfile requirements.txt tests/requirements.txt .github/workflows/build.yaml \
           | md5sum | tr -d '\ -' | sed 's/^/BASE_MD5=md5-/' >> $GITHUB_ENV
           source $GITHUB_ENV
+          if skopeo inspect docker://${BASE_IMAGE_REPO}:${BRANCH_NAME} > mainfest.json; then
+            jq -r '.Labels.BASE_MD5' mainfest.json | sed 's/^/LATEST_BASE_MD5=/' >> $GITHUB_ENV
+          else
+            echo 'LATEST_BASE_MD5=null' >> $GITHUB_ENV
+          fi
 
       - name: Replace Dockerfile if MD5 not update
         if: ${{ env.BASE_MD5 == env.LATEST_BASE_MD5 }}
@@ -75,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           file: build/kubespray-base/Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -85,12 +90,12 @@ jobs:
           tags: |
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
-            
+
       - name: Build and push kubespray images
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           file: build/kubespray/Dockerfile
           platforms: linux/amd64,linux/arm64
           build-args: |
