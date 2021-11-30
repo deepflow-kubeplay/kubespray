@@ -4,3 +4,10 @@
     name: "{{ chrony_service_name }}"
     state: restarted
     enabled: yes
+
+- name: buildkit | restarted buildkit service
+  systemd:
+    name: buildkit
+    enabled: yes
+    state: restarted
+    

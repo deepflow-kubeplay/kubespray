@@ -1,0 +1,25 @@
+---
+- name: buildkit | Download buildkit
+  include_tasks: "../../../download/tasks/download_file.yml"
+  vars:
+    download: "{{ download_defaults | combine(downloads.buildkit) }}"
+
+- name: buildkit | Copy package binary from download dir
+  unarchive:
+    src: "{{ local_release_dir }}/buildkit-{{ buildkit_version }}.linux-{{ image_arch }}.tar.gz"
+    dest: "/usr/local/"
+    mode: 0755
+    remote_src: true
+
+- name: buildkit | Copy buildkit service
+  template:
+    src: "buildkit.service.j2"
+    dest: "/usr/lib/systemd/system/buildkit.service"
+    mode: 0644
+
+- name: ensure buildkit is started and enabled
+  systemd:
+    name: buildkit
+    enabled: yes
+    state: started
+    

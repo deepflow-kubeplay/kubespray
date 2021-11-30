@@ -91,6 +91,7 @@ ovn4nfv_k8s_plugin_image_version: "v1.1.0"
 helm_version: "v3.6.3"
 nerdctl_version: "0.8.1"
 krew_version: "v0.4.1"
+buildkit_version: "v0.9.3"
 
 # Get kubernetes major version (i.e. 1.17.4 => 1.17)
 kube_major_version: "{{ kube_version | regex_replace('^v([0-9])+\\.([0-9]+)\\.[0-9]+', 'v\\1.\\2') }}"
@@ -118,6 +119,7 @@ gvisor_runsc_download_url: "https://storage.googleapis.com/gvisor/releases/relea
 gvisor_containerd_shim_runsc_download_url: "https://storage.googleapis.com/gvisor/releases/release/{{ gvisor_version }}/{{ ansible_architecture }}/containerd-shim-runsc-v1"
 nerdctl_download_url: "https://github.com/containerd/nerdctl/releases/download/v{{ nerdctl_version }}/nerdctl-{{ nerdctl_version }}-{{ ansible_system | lower }}-{{ image_arch }}.tar.gz"
 krew_download_url: "https://github.com/kubernetes-sigs/krew/releases/download/{{ krew_version }}/krew.tar.gz"
+buildkit_download_url: "https://github.com/moby/buildkit/releases/{{ buildkit_version }}/buildkit-{{ buildkit_version }}.{{ ansible_system | lower }}-{{ image_arch }}.tar.gz"
 
 crictl_checksums:
   arm:
@@ -583,6 +585,14 @@ nerdctl_archive_checksums:
   amd64:
     0.14.0: 4d3a2e9ecb9efd278313483e85e34e45605f4f8e61805480de440f69a298a649
 
+buildkit_archive_checksums:
+  arm:
+    v0.9.3: 8864eecbc03b0c97e9f40c73fe2dc1541dcecf9fe68d3f4bbb3c7912294484e1
+  arm64:
+    v0.9.3: 3ee57ac33f8ff6ab1d187e25a217f8f2358826b14d707fd8fe0df6f536613aaf
+  amd64:
+    v0.9.3: f60461abdf2aee8444a4cb0607e4766da3bd503859320819ea8c43fe4a02576c
+
 etcd_binary_checksum: "{{ etcd_binary_checksums[image_arch] }}"
 cni_binary_checksum: "{{ cni_binary_checksums[image_arch] }}"
 kubelet_binary_checksum: "{{ kubelet_checksums[image_arch][kube_version] }}"
@@ -598,6 +608,7 @@ gvisor_runsc_binary_checksum: "{{ gvisor_runsc_binary_checksums[image_arch][gvis
 gvisor_containerd_shim_binary_checksum: "{{ gvisor_containerd_shim_binary_checksums[image_arch][gvisor_version] }}"
 nerdctl_archive_checksum: "{{ nerdctl_archive_checksums[image_arch][nerdctl_version] }}"
 krew_archive_checksum: "{{ krew_archive_checksums[krew_version] }}"
+buildkit_archive_checksums: "{{ buildkit_archive_checksums[image_arch][nerdctl_version] }}"
 
 # Containers
 # In some cases, we need a way to set --registry-mirror or --insecure-registry for docker,
@@ -931,6 +942,19 @@ downloads:
     sha256: "{{ nerdctl_archive_checksum }}"
     url: "{{ nerdctl_download_url }}"
     unarchive: true
+    owner: "root"
+    mode: "0755"
+    groups:
+    - k8s_cluster
+
+  buildkit:
+    file: true
+    enabled: "{{ buildkit_enabled }}"
+    version: "{{ buildkit_version }}"
+    dest: "{{ local_release_dir }}/buildkit-{{ buildkit_version }}.linux-{{ image_arch }}.tar.gz"
+    sha256: "{{ buildkit_archive_checksum }}"
+    url: "{{ buildkit_download_url }}"
+    unarchive: false
     owner: "root"
     mode: "0755"
     groups:
