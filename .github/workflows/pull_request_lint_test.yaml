@@ -1,8 +1,8 @@
 ---
-name: Code Lint
+name: Pull Request Code Lint
 
 on:
-  push:
+  pull_request:
     tags:
       - 'v*'
       - 'rc-*'

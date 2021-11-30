@@ -1,8 +1,8 @@
 ---
-name: Build kubespray images
+name: Pull Request Build kubespray images
 
 on:
-  push:
+  pull_request:
     tags:
       - 'v*'
       - 'rc-*'
@@ -57,16 +57,11 @@ jobs:
           cat build/kubespray-base/Dockerfile requirements.txt tests/requirements.txt .github/workflows/build.yaml \
           | md5sum | tr -d '\ -' | sed 's/^/BASE_MD5=md5-/' >> $GITHUB_ENV
           source $GITHUB_ENV
-          if skopeo inspect docker://${BASE_IMAGE_REPO}:${BRANCH_NAME} > mainfest.json; then
-            jq -r '.Labels.BASE_MD5' mainfest.json | sed 's/^/LATEST_BASE_MD5=/' >> $GITHUB_ENV
-          else
-            echo 'LATEST_BASE_MD5=null' >> $GITHUB_ENV
-          fi
 
       - name: Replace Dockerfile if MD5 not update
         if: ${{ env.BASE_MD5 == env.LATEST_BASE_MD5 }}
         run: |
-          echo "FROM ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}" > build/kubespray-base/Dockerfile
+          echo "FROM ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}" > build/kubespray-base/Dockerfile
 
       - name: Cache Docker layers
         uses: actions/cache@v2
@@ -90,24 +85,7 @@ jobs:
           tags: |
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
-            ${{ env.BASE_IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
-
-      - name: Build and push kubespray images
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          file: build/kubespray/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            BASE_IMAGE=${{ env.BASE_IMAGE_REPO }}
-            BASE_IMAGE_VERSION=${{ env.BASE_MD5 }}
-          tags: |
-            ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            ${{ env.IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
-
+            
       - name: Move new cache
         run: |
           rm -rf /tmp/.buildx-cache
