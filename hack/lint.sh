@@ -58,7 +58,7 @@ check_output() {
     fi
 }
 
-yaml_lint || true
-shell_check || true
+#yaml_lint || true
+#shell_check || true
 ansible_check || true
 check_output
