@@ -1,8 +1,8 @@
 ---
-name: Build kubespray images
+name: Pull Request Build kubespray images
 
 on:
-  push:
+  pull_request:
     tags:
       - 'v*'
       - 'rc-*'
