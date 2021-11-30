@@ -84,7 +84,8 @@ jobs:
           labels: BASE_MD5=${{ env.BASE_MD5 }}
           tags: |
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-
+            ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
+            
       - name: Build and push kubespray images
         uses: docker/build-push-action@v2
         with:
