@@ -66,7 +66,7 @@ jobs:
       - name: Replace Dockerfile if MD5 not update
         if: ${{ env.BASE_MD5 == env.LATEST_BASE_MD5 }}
         run: |
-          echo "FROM ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}" > build/kubespray-base/Dockerfile
+          echo "FROM ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}" > build/kubespray-base/Dockerfile
 
       - name: Cache Docker layers
         uses: actions/cache@v2
@@ -89,7 +89,6 @@ jobs:
           labels: BASE_MD5=${{ env.BASE_MD5 }}
           tags: |
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
 
       - name: Build and push kubespray images
         uses: docker/build-push-action@v2
@@ -103,7 +102,7 @@ jobs:
             BASE_IMAGE_VERSION=${{ env.BASE_MD5 }}
           tags: |
             ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            
+
       - name: Move new cache
         run: |
           rm -rf /tmp/.buildx-cache
