@@ -57,11 +57,6 @@ jobs:
           cat build/kubespray-base/Dockerfile requirements.txt tests/requirements.txt .github/workflows/build.yaml \
           | md5sum | tr -d '\ -' | sed 's/^/BASE_MD5=md5-/' >> $GITHUB_ENV
           source $GITHUB_ENV
-          if skopeo inspect docker://${BASE_IMAGE_REPO}:${BRANCH_NAME} > mainfest.json; then
-            jq -r '.Labels.BASE_MD5' mainfest.json | sed 's/^/LATEST_BASE_MD5=/' >> $GITHUB_ENV
-          else
-            echo 'LATEST_BASE_MD5=null' >> $GITHUB_ENV
-          fi
 
       - name: Replace Dockerfile if MD5 not update
         if: ${{ env.BASE_MD5 == env.LATEST_BASE_MD5 }}
