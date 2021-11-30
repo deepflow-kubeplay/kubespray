@@ -25,8 +25,8 @@ env:
   IMAGE_REGISTRY: "ghcr.io"
   REGISTRY_USER: "${{ github.repository_owner }}"
   REGISTRY_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  FILES_IMAGE_REPO: "ghcr.io/${{ github.repository_owner }}/kubespray-files"
-  IMAGES_IMAGE_REPO: "ghcr.io/${{ github.repository_owner }}/kubespray-images"
+  FILES_IMAGE_REPO: "ghcr.io/deepflow-kubeplay/kubespray-files"
+  IMAGES_IMAGE_REPO: "ghcr.io/deepflow-kubeplay/kubespray-images"
 
 jobs:
   download-files:
@@ -86,7 +86,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           file: build/kubespray-files/Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -157,7 +157,7 @@ jobs:
       - name: Build and push kubespray-images images
         uses: docker/build-push-action@v2
         with:
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           context: .
           file: build/kubespray-images/Dockerfile
           platforms: linux/amd64,linux/arm64
