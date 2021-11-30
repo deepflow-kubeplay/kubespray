@@ -90,8 +90,6 @@ jobs:
           tags: |
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
-            ${{ env.BASE_IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
 
       - name: Build and push kubespray images
         uses: docker/build-push-action@v2
