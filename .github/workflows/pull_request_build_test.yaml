@@ -98,6 +98,10 @@ jobs:
           tags: |
             ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
 
+      - name: Lint image
+        run:
+          docker run --rm -t -v $PWD:/kubespray ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }} bash hack/lint.sh
+
       - name: Move new cache
         run: |
           rm -rf /tmp/.buildx-cache
