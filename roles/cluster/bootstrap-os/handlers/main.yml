@@ -10,4 +10,5 @@
     name: buildkit
     enabled: yes
     state: restarted
+  when: buildkit_enabled | bool
     
