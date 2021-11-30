@@ -19,3 +19,9 @@
   retries: 8
   delay: 4
   until: containerd_ready.rc == 0
+
+- name: buildkit | restarted buildkit service
+  systemd:
+    name: buildkit
+    enabled: yes
+    state: restarted

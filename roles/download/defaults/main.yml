@@ -128,6 +128,7 @@ helm_version: "v3.10.3"
 nerdctl_version: "1.0.0"
 krew_version: "v0.4.3"
 skopeo_version: v1.10.0
+buildkit_version: "v0.9.3"
 
 # Get kubernetes major version (i.e. 1.17.4 => 1.17)
 kube_major_version: "{{ kube_version | regex_replace('^v([0-9])+\\.([0-9]+)\\.[0-9]+', 'v\\1.\\2') }}"
@@ -174,6 +175,7 @@ krew_download_url: "https://github.com/kubernetes-sigs/krew/releases/download/{{
 containerd_download_url: "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
 cri_dockerd_download_url: "https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_dockerd_version }}/cri-dockerd-{{ cri_dockerd_version }}.{{ image_arch }}.tgz"
 skopeo_download_url: "https://github.com/lework/skopeo-binary/releases/download/{{ skopeo_version }}/skopeo-linux-{{ image_arch }}"
+buildkit_download_url: "https://github.com/moby/buildkit/releases/{{ buildkit_version }}/buildkit-{{ buildkit_version }}.{{ ansible_system | lower }}-{{ image_arch }}.tar.gz"
 
 crictl_checksums:
   arm:
@@ -963,6 +965,16 @@ skopeo_binary_checksums:
 
 etcd_binary_checksum: "{{ etcd_binary_checksums[image_arch][etcd_version] }}"
 cni_binary_checksum: "{{ cni_binary_checksums[image_arch][cni_version] }}"
+buildkit_archive_checksums:
+  arm:
+    v0.9.3: 8864eecbc03b0c97e9f40c73fe2dc1541dcecf9fe68d3f4bbb3c7912294484e1
+  arm64:
+    v0.9.3: 3ee57ac33f8ff6ab1d187e25a217f8f2358826b14d707fd8fe0df6f536613aaf
+  amd64:
+    v0.9.3: f60461abdf2aee8444a4cb0607e4766da3bd503859320819ea8c43fe4a02576c
+
+etcd_binary_checksum: "{{ etcd_binary_checksums[image_arch] }}"
+cni_binary_checksum: "{{ cni_binary_checksums[image_arch] }}"
 kubelet_binary_checksum: "{{ kubelet_checksums[image_arch][kube_version] }}"
 kubectl_binary_checksum: "{{ kubectl_checksums[image_arch][kube_version] }}"
 kubeadm_binary_checksum: "{{ kubeadm_checksums[image_arch][kubeadm_version] }}"
@@ -1408,6 +1420,19 @@ downloads:
     mode: "0755"
     groups:
     - kube_control_plane
+
+  buildkit:
+    file: true
+    enabled: "{{ buildkit_enabled }}"
+    version: "{{ buildkit_version }}"
+    dest: "{{ local_release_dir }}/buildkit-{{ buildkit_version }}.linux-{{ image_arch }}.tar.gz"
+    sha256: "{{ buildkit_archive_checksum }}"
+    url: "{{ buildkit_download_url }}"
+    unarchive: false
+    owner: "root"
+    mode: "0755"
+    groups:
+    - k8s_cluster
 
   cilium:
     enabled: "{{ kube_network_plugin == 'cilium' or cilium_deploy_additionally | default(false) | bool }}"
