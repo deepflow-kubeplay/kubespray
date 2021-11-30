@@ -168,8 +168,6 @@ jobs:
           tags: |
             ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGES_MD5 }}
-            ${{ env.IMAGES_IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
 
       - name: Move new cache
         run: |

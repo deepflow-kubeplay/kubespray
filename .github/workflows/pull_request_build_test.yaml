@@ -103,9 +103,7 @@ jobs:
             BASE_IMAGE_VERSION=${{ env.BASE_MD5 }}
           tags: |
             ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            ${{ env.IMAGE_REPO }}:${{ env.BRANCH_NAME }}
-            ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG_BY_BRANCH }}
-
+            
       - name: Move new cache
         run: |
           rm -rf /tmp/.buildx-cache
