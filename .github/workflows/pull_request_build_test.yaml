@@ -86,10 +86,6 @@ jobs:
             ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_MD5 }}
             
-      - name: Lint image
-        run:
-          docker run --rm -t -v $PWD:/kubespray ${{ env.BASE_IMAGE_REPO }}:${{ env.IMAGE_TAG }} bash hack/lint.sh
-
       - name: Move new cache
         run: |
           rm -rf /tmp/.buildx-cache
