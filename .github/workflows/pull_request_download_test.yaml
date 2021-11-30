@@ -94,7 +94,6 @@ jobs:
           labels: FILES_MD5=${{ env.FILES_MD5 }}
           tags: |
             ${{ env.FILES_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            ${{ env.FILES_IMAGE_REPO }}:${{ env.FILES_MD5 }}
 
       - name: Move new cache
         run: |
@@ -167,7 +166,6 @@ jobs:
           labels: IMAGES_MD5=${{ env.IMAGES_MD5 }}
           tags: |
             ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGE_TAG }}
-            ${{ env.IMAGES_IMAGE_REPO }}:${{ env.IMAGES_MD5 }}
 
       - name: Move new cache
         run: |
