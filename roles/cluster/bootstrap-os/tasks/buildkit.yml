@@ -14,7 +14,7 @@
 - name: buildkit | Copy buildkit service
   template:
     src: "buildkit.service.j2"
-    dest: "/usr/lib/systemd/system/buildkit.service"
+    dest: "/etc/systemd/system/buildkit.service"
     mode: 0644
 
 - name: ensure buildkit is started and enabled
