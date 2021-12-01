@@ -80,6 +80,7 @@ systemReserved:
 evictionHard:
   memory.available: "512Mi"
   nodefs.available: "10Gi"
+  nodefs.inodesFree: "5%"
   imagefs.available: "10Gi"
 resolvConf: "{{ kube_resolv_conf }}"
 {% if kubelet_config_extra_args %}
