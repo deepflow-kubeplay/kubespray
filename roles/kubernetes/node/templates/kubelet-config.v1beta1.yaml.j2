@@ -63,25 +63,32 @@ kubeReserved:
 {% if is_kube_master|bool %}
   cpu: {{ kube_master_cpu_reserved }}
   memory: {{ kube_master_memory_reserved }}
+  pid: "1000"
 {% else %}
   cpu: {{ kube_cpu_reserved }}
   memory: {{ kube_memory_reserved }}
+  pid: "1000"
 {% endif %}
 {% if system_reserved is defined and system_reserved %}
 systemReserved:
 {% if is_kube_master|bool %}
   cpu: {{ system_master_cpu_reserved }}
   memory: {{ system_master_memory_reserved }}
+  pid: "1000"
 {% else %}
   cpu: {{ system_cpu_reserved }}
   memory: {{ system_memory_reserved }}
+  pid: "1000"
 {% endif %}
 {% endif %}
 evictionHard:
   memory.available: "512Mi"
+  ## allocatableMemory.available: "512Mi"
   nodefs.available: "10Gi"
   nodefs.inodesFree: "5%"
   imagefs.available: "10Gi"
+  imagefs.inodesFree: "5%"
+  pid.available: "3000"
 resolvConf: "{{ kube_resolv_conf }}"
 {% if kubelet_config_extra_args %}
 {{ kubelet_config_extra_args | to_nice_yaml(indent=2) }}

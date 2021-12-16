@@ -1,4 +1,11 @@
 ---
+- name: Fetch /etc/os-release
+  raw: cat /etc/os-release
+  register: os_release
+  changed_when: false
+  # This command should always run, even in check mode
+  check_mode: false
+  
 - name: Backup system default package manager repo file
   shell: find /etc -type f -name '*.repo' -o -name '*.list' | grep -E '/etc/yum.repos.d/|/etc/apt/' | xargs -L1 -I % mv % %.bak
   ignore_errors: true
@@ -18,6 +25,16 @@
     mode: 0644
   when:
     - ansible_os_family == "RedHat"
+    - '''ID="centos"'' in os_release.stdout_lines'
+  
+- name: Configure offline resources repository on yum package manager
+  template:
+    src: "yum_offline_resources_redhat.repo.j2"
+    dest: "{{ yum_repo_dir }}/offline-resources.repo"
+    mode: 0644
+  when:
+    - ansible_os_family == "RedHat"
+    - '''ID="rhel"'' in os_release.stdout_lines'
 
 - name: Update apt repository cache
   apt:
