@@ -20,7 +20,7 @@ driftfile {{ chrony_config_driftfile }}
 logdir {{ chrony_config_logdir }}
 
 # Stop bad estimates upsetting machine clock.
-maxupdateskew 100.0
+maxupdateskew 43200.0
 
 # This directive enables kernel synchronisation (every 11 minutes) of the
 # real-time clock. Note that it can't be used along with the 'rtcfile' directive.

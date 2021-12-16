@@ -115,9 +115,12 @@ evictionHard:
 {% endif %}
 evictionHard:
   memory.available: "512Mi"
+  ## allocatableMemory.available: "512Mi"
   nodefs.available: "10Gi"
   nodefs.inodesFree: "5%"
   imagefs.available: "10Gi"
+  imagefs.inodesFree: "5%"
+  pid.available: "3000"
 resolvConf: "{{ kube_resolv_conf }}"
 {% if kubelet_config_extra_args %}
 {{ kubelet_config_extra_args | to_nice_yaml(indent=2) }}
