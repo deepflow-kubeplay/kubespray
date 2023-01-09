@@ -54,7 +54,7 @@ deploy_cluster(){
   for step in ${STEPS}; do
     if ! grep -q "${step}" ${INSTALL_STEPS_FILE}; then
       infolog "######  start deploy ${step}  ######"
-      if ansible-playbook ${ANSIBLE_ARGS} ${KUBE_ROOT}/playbooks/${step}.yml; then
+      if ansible-playbook ${ANSIBLE_ARGS} ${KUBE_ROOT}/playbooks/${step}.yml &> ${KUBE_ROOT}/runner.log; then
         echo ${step} >> ${INSTALL_STEPS_FILE}
         infolog "######  ${step} successfully installed  ######"
       else
@@ -76,7 +76,7 @@ main(){
       ;;
     remove-cluster)
       infolog "######  start remove kubernetes cluster  ######"
-      if ansible-playbook ${ANSIBLE_ARGS} ${KUBE_ROOT}/reset.yml >/dev/stdout 2>/dev/stderr; then
+      if ansible-playbook ${ANSIBLE_ARGS} ${KUBE_ROOT}/reset.yml &> ${KUBE_ROOT}/runner.log; then
         rm -f ${INSTALL_STEP_FILE}
         infolog "######  kubernetes cluster successfully removed ######"
       fi
@@ -84,12 +84,12 @@ main(){
     add-node)
       check_nodename
       infolog "######  start add worker to kubernetes cluster  ######"
-      ansible-playbook ${ANSIBLE_ARGS} --limit="${NODES}" ${KUBE_ROOT}/playbooks/10-scale-nodes.yml >/dev/stdout 2>/dev/stderr
+      ansible-playbook ${ANSIBLE_ARGS} --limit="${NODES}" ${KUBE_ROOT}/playbooks/10-scale-nodes.yml &> ${KUBE_ROOT}/runner.log
       ;;
     remove-node)
       check_nodename
       infolog "######  start remove worker from kubernetes cluster  ######"
-      ansible-playbook ${ANSIBLE_ARGS} -e node="${NODES}" -e reset_nodes=true ${KUBE_ROOT}/remove-node.yml >/dev/stdout 2>/dev/stderr
+      ansible-playbook ${ANSIBLE_ARGS} -e node="${NODES}" -e reset_nodes=true ${KUBE_ROOT}/remove-node.yml &> ${KUBE_ROOT}/runner.log
       ;;
     *)
       errorlog "unknow [TYPE] parameter: ${TYPE}"

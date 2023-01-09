@@ -26,7 +26,7 @@ grep '_version:' ${REPO_PATH}/${DOWNLOAD_YML} \
 | sed 's/: /=/g;s/{{/${/g;s/}}/}/g' | tr -d ' ' >> /tmp/generate.sh
 
 # generate download files url list
-grep '_download_url:' ${REPO_PATH}/${DOWNLOAD_YML} \
+grep '_download_url:' ${REPO_PATH}/${DOWNLOAD_YML} | grep -v ^# \
 | sed 's/: /=/g;s/ //g;s/{{/${/g;s/}}/}/g;s/|lower//g;s/^.*_url=/echo /g' >> /tmp/generate.sh
 
 # generate download images list

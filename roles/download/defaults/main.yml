@@ -973,8 +973,6 @@ buildkit_archive_checksums:
   amd64:
     v0.9.3: f60461abdf2aee8444a4cb0607e4766da3bd503859320819ea8c43fe4a02576c
 
-etcd_binary_checksum: "{{ etcd_binary_checksums[image_arch] }}"
-cni_binary_checksum: "{{ cni_binary_checksums[image_arch] }}"
 kubelet_binary_checksum: "{{ kubelet_checksums[image_arch][kube_version] }}"
 kubectl_binary_checksum: "{{ kubectl_checksums[image_arch][kube_version] }}"
 kubeadm_binary_checksum: "{{ kubeadm_checksums[image_arch][kubeadm_version] }}"

@@ -33,7 +33,7 @@
 
 - src: quay.io/calico/typha
   dest: library/calico-typha
-- src: quay.io/coreos/flannel
+- src: docker.io/flannelcni/flannel
   dest: library/flannel
 
 
